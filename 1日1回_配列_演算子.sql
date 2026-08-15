@@ -3,13 +3,13 @@ drop function if exists p;
 drop function if exists hello;
 drop table if exists tbl_配列テスト;
 
---左側の要素は、右側の要素をすべて含んでいるか?
+--左側の要素は、右側の要素をすべて含んでいるか?(AND)
 select Array[1,2,3] @> Array[1,3];
 
---右側の要素は、左側の要素をすべて含んでいるか?
+--右側の要素は、左側の要素をすべて含んでいるか?(AND)
 select Array[1,2,3] <@ Array[1,2,35];
 
---共通の要素を持っているか?
+--共通の要素を持っているか?(OR)
 select Array[1,2,3] && Array[4,5,6,2];
 
 --結合
