@@ -93,6 +93,11 @@ select * from sal_emp where 10000 = any(pay_by_quarter);
 
 select generate_subscripts(pay_by_quarter,1) from sal_emp;
 
+select * from (
+select pay_by_quarter,generate_subscripts(pay_by_quarter,1) as s from sal_emp as foo
+) where pay_by_quarter[s]=20000;
+
+
 
 /*
 -- 各記事(posts)が持っているタグ配列(tags)を行に展開する
