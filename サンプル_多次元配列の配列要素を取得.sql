@@ -1,3 +1,4 @@
+
 drop table if exists tbl_Array;
 drop sequence if exists seq_Array;
 create sequence seq_Array
@@ -38,14 +39,24 @@ begin
 
 end; $$ LANGUAGE plpgsql;
 
+
+select  s,a[idx:idx],
+(
+    select array_agg(e)
+    from unnest(a[idx:idx]) as e
+    --select array_agg(a[idx][j]) 
+    --from generate_series(1,len) as j
+) from(
+    select s,a,generate_subscripts(a,1) as idx, array_length(a,1) as len from tbl_array
+);
+
+/*
 select s,a,a[idx:idx][1:len],
 (
     select array_agg(a[idx][j])
     from generate_series(1,len) as j
 )
-
-
  from (
     select s,a,generate_subscripts(a,1) as  idx,array_length(a,2) as len from tbl_Array
 )
-
+*/

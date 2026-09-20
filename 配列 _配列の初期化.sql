@@ -14,20 +14,27 @@ create table tbl_Array(
     a integer[]
 );
 
+create table tbl_Array2(
+    a integer[],
+    a2 text[][]
+);
 
 
 do $$
 declare
     i integer;
-    j integer;
     a integer[];
+    a2 text[][];
 begin
-    for i in 0..100 loop
-        for j in 0..100
-            
-        end loop;
-    end loop;
+    --NULLの場合は明示的なキャストが必要
+    a:=array_fill(NULL::integer,Array[5]);
+    insert into tbl_Array2(a) values(a);
 
+    --2次元配列の初期化
+    a2:=array_fill('a'::text,Array[3,5]);
+    insert into tbl_Array2(a2) values(a2);
+
+    
 
 end; $$ LANGUAGE plpgsql;
 
