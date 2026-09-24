@@ -38,16 +38,8 @@ begin
         );
     end loop;
 end; $$ LANGUAGE plpgsql;
-select coalesce(name,'***'),calender.hizuke from 
-( select current_date - generate_series(1,10) as hizuke) as calender
-left outer join 
-(
-    select master.name,sales.hizuke,master.price,sales.amount
-    from tbl_集合_master as master
-    inner join tbl_集合_売上 as sales using(item_id)
-) as result
-using(hizuke)
-order by hizuke desc;
 
 
-
+select row_number() OVER (partition by sales.hizuke) AS ordinality,master.name,sales.hizuke from tbl_集合_master as master
+inner join tbl_集合_売上 as sales using(item_id)
+order by sales.hizuke desc;
